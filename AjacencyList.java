@@ -18,5 +18,9 @@ public class AjacencyList {
             alist.get(i).stream().forEach(x -> System.out.print(x));
             System.out.println();
         }
+
+        for (int i = 0; i < alist.size(); i++) {
+            System.out.println("Hello world");
+        }
     }
 }
