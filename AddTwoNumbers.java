@@ -30,8 +30,8 @@ class AddTwoNumbers {
                 result.next = newNode;
                 result = result.next;
 
-                l1 = l1.next;
-                l2 = l2.next;
+                l1 = (l1 != null) ? l1.next : l1;
+                l2 = (l2 != null) ? l2.next : l2;
             }
 
             if (carry == 1)
