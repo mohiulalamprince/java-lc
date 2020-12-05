@@ -1,6 +1,9 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class PathSumIII {
     static int counter = 0;
-    public static void main(String args[]) {
+    public  void main(String args[]) {
         TreeNode root = new TreeNode(10);
         root.left = new TreeNode(5);
         root.right = new TreeNode(-3);
@@ -11,39 +14,36 @@ public class PathSumIII {
         root.left.right.right = new TreeNode(1);
         root.right.right = new TreeNode(11);
 
-        int result = pathSum(root, 0);
+        int result = pathSum(root, 8);
         System.out.println(result);
     }
 
-    public static int pathSum(TreeNode root, int sum) {
+    Map<Integer, Integer> map = new HashMap<>();
+    public  int pathSum(TreeNode root, int sum) {
         int result = 0;
         counter = 0;
 
+        //map.put(0, 1);
         dfs(root, 0, sum);
 
-        return result;
+        return counter;
     }
 
-    public static int dfs(TreeNode root, int sum, int target) {
-        if (root == null) return 0;
+    public  void dfs(TreeNode root, int sum, int target) {
+        if (root == null) return ;
 
-        if (target == sum) counter++;
+        int curSum = sum + root.val;
 
-        int leftSum = 0;
-        int rightSum = 0;
-        if (root.left != null)
-            leftSum = dfs(root.left, sum, target);
-        if (root.right != null)
-            rightSum = dfs(root.right, sum, target);
+        if (curSum == target) counter++;
 
-        if (sum + root.val + leftSum == target) counter++;
-        if (sum + leftSum == target) counter++;
-        if (sum + rightSum == target) counter++;
-        if (leftSum == target) counter++;
-        if (rightSum == target) counter++;
-        if (root.val + leftSum == target) counter++;
-        if (root.val + rightSum == target) counter++;
 
-        return root.val + sum;
+        counter += map.getOrDefault(curSum - target, 0);
+
+        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
+
+        dfs(root.left, curSum, target);
+        dfs(root.right, curSum, target);
+
+        map.put(curSum, map.getOrDefault(curSum, 0) - 1);
     }
 }
